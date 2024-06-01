@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Prediction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding-top: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1, h2 {
+            color: #4CAF50;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="number"],
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #4CAF50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #examples {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        #examples button {
+            background: #2196F3;
+            margin: 5px 0;
+        }
+        #examples button:hover {
+            background: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sales Prediction</h1>
+    
+    {% if prediction %}
+        <h2>Prediction: {{ prediction }}$</h2>
+    {% endif %}
+
+    <form id="prediction-form" action="/predict" method="post">
+        <label for="Store">Store:</label>
+        <input type="number" id="Store" name="Store" required>
+        
+        <label for="DayOfWeek">Day of Week:</label>
+        <input type="number" id="DayOfWeek" name="DayOfWeek" required>
+        
+        <label for="Customers">Customers:</label>
+        <input type="number" id="Customers" name="Customers" required>
+        
+        <label for="Open">Open:</label>
+        <input type="text" id="Open" name="Open" value="False" required>
+        
+        <label for="Promo">Promo:</label>
+        <input type="text" id="Promo" name="Promo" value="False" required>
+        
+        <label for="SchoolHoliday">School Holiday:</label>
+        <input type="text" id="SchoolHoliday" name="SchoolHoliday" value="False" required>
+        
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="examples">
+        <h2>Load Example Data</h2>
+        <button type="button" onclick='loadExample({"Store":1,"DayOfWeek":5,"Customers":555,"Open":"True","Promo":"False","SchoolHoliday":"False"});'>Example 1</button>
+        <button type="button" onclick='loadExample({"Store":2,"DayOfWeek":3,"Customers":432,"Open":"True","Promo":"True","SchoolHoliday":"False"});'>Example 2</button>
+        <button type="button" onclick='loadExample({"Store":3,"DayOfWeek":1,"Customers":300,"Open":"False","Promo":"False","SchoolHoliday":"True"});'>Example 3</button>
+        <button type="button" onclick='loadExample({"Store":4,"DayOfWeek":7,"Customers":678,"Open":"True","Promo":"False","SchoolHoliday":"False"});'>Example 4</button>
+        <button type="button" onclick='loadExample({"Store":5,"DayOfWeek":2,"Customers":123,"Open":"True","Promo":"True","SchoolHoliday":"True"});'>Example 5</button>
+    </div>
+
+    <script>
+        function loadExample(data) {
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const element = document.querySelector([name="${key}"]);
+                    if (element) {
+                        element.value = data[key];
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
